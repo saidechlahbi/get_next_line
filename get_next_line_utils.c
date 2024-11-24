@@ -6,7 +6,7 @@
 /*   By: sechlahb <sechlahb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 13:40:17 by sechlahb          #+#    #+#             */
-/*   Updated: 2024/11/24 20:48:46 by sechlahb         ###   ########.fr       */
+/*   Updated: 2024/11/24 20:58:52 by sechlahb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!str)
 		return (NULL);
 	*str = '\0';
-	ft_strlcat(str, s2, l + 1);
-	ft_strlcat(str, s1, l + 1);
+	ft_strlcat(str, s1, ft_strlen(s1) + 1);
+	ft_strlcat(str, s1, ft_strlen(s1) + 1);
 	return (free(s1),s1 = NULL, str);
 }
