@@ -6,7 +6,7 @@
 /*   By: sechlahb <sechlahb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:41:35 by sechlahb          #+#    #+#             */
-/*   Updated: 2024/11/27 19:55:12 by sechlahb         ###   ########.fr       */
+/*   Updated: 2024/11/28 00:40:46 by sechlahb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_calloc(size_t nmemb, size_t size)
 {
 	char	*s;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	s = malloc(size * nmemb);
@@ -38,7 +38,7 @@ static char	*get_full_line(int fd, char *buffer)
 
 	r = 0;
 	full_line = ft_strdup(buffer);
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
 		return (NULL);
 	while (!ft_strchr(full_line, '\n'))
 	{
@@ -83,9 +83,7 @@ static char	*get_line(char *str)
 static char	*get_rest_of_line(char *str)
 {
 	char	*rest;
-	char	*old;
 
-	old = str;
 	while (*str && *str != '\n')
 		str++;
 	if (*(++str) == '\0')
@@ -102,6 +100,8 @@ char	*get_next_line(int fd)
 
 	full_line = NULL;
 	line = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
+		return (NULL);
 	if (!buffer[fd])
 		buffer[fd] = ft_strdup("");
 	if (!buffer[fd])
@@ -134,12 +134,16 @@ char	*get_next_line(int fd)
 // 	// 	printf("%s",line);
 // 	// 	free(line);
 // 	// }
-// 	line = get_next_line(fd);
-// 	printf("%s", line);
-// 	free(line);
-// 		line = get_next_line(fd1);
-// 	printf("%s", line);
-// 	free(line);
+// 	while ((line = get_next_line(fd)))
+// 	{
+// 		printf("%s", line);
+// 		free(line);
+// 	}
 
+// 	while (line = get_next_line(fd1))
+// 	{
+// 		printf("%s", line);
+// 		free(line);
+// 	}
 // 	return (0);
 // }

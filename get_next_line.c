@@ -6,7 +6,7 @@
 /*   By: sechlahb <sechlahb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:41:35 by sechlahb          #+#    #+#             */
-/*   Updated: 2024/11/27 20:04:37 by sechlahb         ###   ########.fr       */
+/*   Updated: 2024/11/28 00:48:54 by sechlahb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_calloc(size_t nmemb, size_t size)
 {
 	char	*s;
-	size_t		i;
+	size_t	i;
 
 	i = 0;
 	s = malloc(size * nmemb);
@@ -38,11 +38,11 @@ static char	*get_full_line(int fd, char *buffer)
 
 	r = 0;
 	full_line = ft_strdup(buffer);
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (!full_line)
 		return (NULL);
 	while (!ft_strchr(full_line, '\n'))
 	{
-		vessel = ft_calloc(BUFFER_SIZE + 1, 1);
+		vessel = ft_calloc((size_t)BUFFER_SIZE + 1, 1);
 		if (!vessel)
 			return (free(full_line), NULL);
 		r = read(fd, vessel, BUFFER_SIZE);
@@ -86,9 +86,11 @@ static char	*get_rest_of_line(char *str)
 
 	while (*str && *str != '\n')
 		str++;
-	if (*(++str) == '\0')
+	str++;
+	if (*str == 0)
 		return (NULL);
-	rest = ft_strdup(str);
+	else
+		rest = ft_strdup(str);
 	return (rest);
 }
 
@@ -98,6 +100,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*full_line;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	full_line = NULL;
 	line = NULL;
 	if (!buffer)
@@ -110,7 +114,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = get_line(full_line);
 	if (!line)
-		return (NULL);
+		return (free(full_line), NULL);
 	buffer = get_rest_of_line(full_line);
 	free(full_line);
 	return (line);
@@ -120,27 +124,17 @@ char	*get_next_line(int fd)
 // {
 // 	int fd; // Assuming 0 is a valid file descriptor (stdin)
 // 	char *line;
-// 	fd = open("formu
-// le.txt", O_RDONLY);
+// 	fd = open("formule.txt", O_RDONLY);
 // 	if (fd == -1)
 // 		return (1);
-// 	// int fd1 = open("formule1.txt", O_RDONLY);
-// 	// if (fd1 == -1)
-// 	// 	return (1);
 
-// 	// while ((line = get_next_line(fd)) != NULL)
-// 	// {
-// 	// 	printf("%s",line);
-// 	// 	free(line);
-// 	// }
 // 	while ((line = get_next_line(fd)) != NULL)
 // 	{
-// 			printf("%s", line);
-// 		free(line);	
+// 		printf("%s", line);
+// 		free(line);
 // 	}
-	
+
 // 	// line = get_next_line(fd);
-// 	// line = get_next_line(fd1);
 // 	// printf("%s", line);
 // 	// free(line);
 
