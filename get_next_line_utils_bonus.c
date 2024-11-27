@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sechlahb <sechlahb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 13:40:17 by sechlahb          #+#    #+#             */
-/*   Updated: 2024/11/27 20:05:26 by sechlahb         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:17:01 by sechlahb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_strlen(char *s)
 {
@@ -24,6 +24,8 @@ int	ft_strlen(char *s)
 
 char	*ft_strchr(char *s, int c)
 {
+	char	*str;
+
 	while (*s)
 	{
 		if (*s == c)

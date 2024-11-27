@@ -3,7 +3,7 @@ SRC = get_next_line.c get_next_line_utils.c
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 OBJ = $(SRC:.c=.o)
-NAME = libft_get_next_line.a
+NAME = libftprintf.a
 
 all: $(NAME)
 
