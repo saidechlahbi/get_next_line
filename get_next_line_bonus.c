@@ -6,7 +6,7 @@
 /*   By: sechlahb <sechlahb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:41:35 by sechlahb          #+#    #+#             */
-/*   Updated: 2024/11/28 15:56:38 by sechlahb         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:04:16 by sechlahb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,10 @@ static char	*get_rest_of_line(char *str)
 
 	while (*str && *str != '\n')
 		str++;
+	if (*str == '\0')
+		return (NULL);
 	str++;
-	if (*str == 0)
+	if (*str == '\0')
 		return (NULL);
 	else
 		rest = ft_strdup(str);
@@ -96,26 +98,27 @@ static char	*get_rest_of_line(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[1024];
 	char		*line;
 	char		*full_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
 		return (NULL);
 	full_line = NULL;
 	line = NULL;
-	if (!buffer)
-		buffer = ft_strdup("");
-	if (!buffer)
+	if (!buffer[fd])
+		buffer[fd] = ft_strdup("");
+	if (!buffer[fd])
 		return (NULL);
-	full_line = get_full_line(fd, buffer);
-	free(buffer);
+	full_line = get_full_line(fd, buffer[fd]);
+	free(buffer[fd]);
+	buffer[fd] = NULL;
 	if (!full_line)
 		return (NULL);
 	line = get_line(full_line);
 	if (!line)
 		return (free(full_line), NULL);
-	buffer = get_rest_of_line(full_line);
+	buffer[fd] = get_rest_of_line(full_line);
 	free(full_line);
 	return (line);
 }
@@ -124,11 +127,11 @@ char	*get_next_line(int fd)
 // {
 // 	int fd; // Assuming 0 is a valid file descriptor (stdin)
 // 	char *line;
-// 	fd = open("formule.txt", O_RDONLY);
+// 	fd = open("ssss.txt", O_RDONLY);
 // 	if (fd == -1)
 // 		return (1);
 
-// 	if ((line = get_next_line(fd)) != NULL)
+// 	while ((line = get_next_line(fd)) != NULL)
 // 	{
 // 		printf("%s", line);
 // 		free(line);
