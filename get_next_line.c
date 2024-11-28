@@ -6,7 +6,7 @@
 /*   By: sechlahb <sechlahb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:41:35 by sechlahb          #+#    #+#             */
-/*   Updated: 2024/11/28 00:48:54 by sechlahb         ###   ########.fr       */
+/*   Updated: 2024/11/28 15:54:18 by sechlahb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char	*get_next_line(int fd)
 // 	if (fd == -1)
 // 		return (1);
 
-// 	while ((line = get_next_line(fd)) != NULL)
+// 	if ((line = get_next_line(fd)) != NULL)
 // 	{
 // 		printf("%s", line);
 // 		free(line);

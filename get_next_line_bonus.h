@@ -6,7 +6,7 @@
 /*   By: sechlahb <sechlahb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:41:44 by sechlahb          #+#    #+#             */
-/*   Updated: 2024/11/27 17:16:42 by sechlahb         ###   ########.fr       */
+/*   Updated: 2024/11/28 15:56:24 by sechlahb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
+#  define BUFFER_SIZE 1
 # endif
 
 char	*ft_calloc(size_t nmemb, size_t size);

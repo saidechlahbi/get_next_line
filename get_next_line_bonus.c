@@ -6,7 +6,7 @@
 /*   By: sechlahb <sechlahb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:41:35 by sechlahb          #+#    #+#             */
-/*   Updated: 2024/11/28 00:40:46 by sechlahb         ###   ########.fr       */
+/*   Updated: 2024/11/28 15:56:38 by sechlahb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ static char	*get_full_line(int fd, char *buffer)
 
 	r = 0;
 	full_line = ft_strdup(buffer);
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
+	if (!full_line)
 		return (NULL);
 	while (!ft_strchr(full_line, '\n'))
 	{
-		vessel = ft_calloc(BUFFER_SIZE + 1, 1);
+		vessel = ft_calloc((size_t)BUFFER_SIZE + 1, 1);
 		if (!vessel)
 			return (free(full_line), NULL);
 		r = read(fd, vessel, BUFFER_SIZE);
@@ -86,64 +86,64 @@ static char	*get_rest_of_line(char *str)
 
 	while (*str && *str != '\n')
 		str++;
-	if (*(++str) == '\0')
+	str++;
+	if (*str == 0)
 		return (NULL);
-	rest = ft_strdup(str);
+	else
+		rest = ft_strdup(str);
 	return (rest);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer[1024];
+	static char	*buffer;
 	char		*line;
 	char		*full_line;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	full_line = NULL;
 	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
+	if (!buffer)
+		buffer = ft_strdup("");
+	if (!buffer)
 		return (NULL);
-	if (!buffer[fd])
-		buffer[fd] = ft_strdup("");
-	if (!buffer[fd])
-		return (NULL);
-	full_line = get_full_line(fd, buffer[fd]);
-	free(buffer[fd]);
+	full_line = get_full_line(fd, buffer);
+	free(buffer);
 	if (!full_line)
 		return (NULL);
 	line = get_line(full_line);
 	if (!line)
-		return (NULL);
-	buffer[fd] = get_rest_of_line(full_line);
+		return (free(full_line), NULL);
+	buffer = get_rest_of_line(full_line);
 	free(full_line);
 	return (line);
 }
 
 // int	main(void)
 // {
-// 	int fd = 0; // Assuming 0 is a valid file descriptor (stdin)
+// 	int fd; // Assuming 0 is a valid file descriptor (stdin)
 // 	char *line;
 // 	fd = open("formule.txt", O_RDONLY);
 // 	if (fd == -1)
 // 		return (1);
-// 	int fd1 = open("formule1.txt", O_RDONLY);
-// 	if (fd1 == -1)
-// 		return (1);
 
-// 	// while ((line = get_next_line(fd)) != NULL)
-// 	// {
-// 	// 	printf("%s",line);
-// 	// 	free(line);
-// 	// }
-// 	while ((line = get_next_line(fd)))
+// 	if ((line = get_next_line(fd)) != NULL)
 // 	{
 // 		printf("%s", line);
 // 		free(line);
 // 	}
 
-// 	while (line = get_next_line(fd1))
-// 	{
-// 		printf("%s", line);
-// 		free(line);
-// 	}
+// 	// line = get_next_line(fd);
+// 	// printf("%s", line);
+// 	// free(line);
+
+// 	// line = get_next_line(fd);
+// 	// printf("%s", line);
+// 	// free(line);
+
+// 	// line = get_next_line(fd1);
+// 	// printf("%s", line);
+// 	// free(line);
 // 	return (0);
 // }
